@@ -20,6 +20,9 @@ gem 'geocoder'
 # heroku
 gem 'rails_12factor', group: :production
 
+# turbolinks help
+gem 'jquery-turbolinks'
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
