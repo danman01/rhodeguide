@@ -1,0 +1,67 @@
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{@location.latitude}%2C#{@location.longitude}" %>
+
+<h3>Nearby locations</h3>
+<ul>
+<% for location in @location.nearbys(10) %>
+  <li><%= link_to location.address, location %> (<%= location.distance.round(2) %> miles)</li>
+<% end %>
+</ul>
+<p>
+  <strong>Address:</strong>
+  <%= @location.address %>
+</p>
+<p>
+  <strong>Latitude:</strong>
+  <%= @location.latitude %>
+</p>
+<p>
+  <strong>Longitude:</strong>
+  <%= @location.longitude %>
+</p>
+<p>
+  <strong>neighborhood:</strong>
+  <%= @location.neighborhood %>
+</p>
+
+<p>
+  <strong>beds:</strong>
+  <%= @location.beds %>
+</p>
+
+<p>
+  <strong>baths:</strong>
+  <%= @location.baths %>
+</p>
+
+<p>
+  <strong>taxes:</strong>
+  <%= @location.taxes %>
+</p>
+<h2>Realtor</h2>
+<p>
+  <strong>name:</strong>
+  <%= @location.name %>
+</p>
+
+<p>
+  <strong>phone:</strong>
+  <%= @location.phone %>
+</p>
+
+<p>
+  <strong>link:</strong>
+  <%= @location.link %>
+</p>
+
+<p>
+  <strong>notes:</strong>
+  <%= @location.notes %>
+</p>
+
+
+
+<p>
+  <%= link_to "Edit", edit_location_path(@location) %> |
+  <%= link_to "Destroy", @location, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", locations_path %>
+</p>

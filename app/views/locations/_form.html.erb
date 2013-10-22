@@ -1,0 +1,54 @@
+<%= form_for @location do |f| %>
+  <p>
+<%= f.label :address %><br />
+<%= f.text_field :address %>
+</p>
+<% if params[:action]=="edit" %>
+<p>
+<%= f.label :latitude %><br />
+<%= f.text_field :latitude %>
+</p>
+<p>
+<%= f.label :longitude %><br />
+<%= f.text_field :longitude %>
+</p>
+<% end %>
+<p><%= f.label :neighborhood %><br />
+  <%= f.text_field :neighborhood %>
+</p>
+<p>
+<%= f.label :beds %><br />
+<%= f.text_field :beds %>
+</p>
+<p>
+<%= f.label :baths %><br />
+<%= f.text_field :baths %>
+</p>
+<p>
+<%= f.label :price %><br />
+<%= f.text_field :price %>
+</p>
+<p>
+<%= f.label :taxes %><br />
+<%= f.text_field :taxes %>
+</p>
+<h2>Realtor:</h2>
+<p>
+<%= f.label :name %><br />
+<%= f.text_field :name %>
+</p>
+<p>
+<%= f.label :phone %><br />
+<%= f.telephone_field :phone %>
+</p>
+<p>
+<%= f.label :link %><br />
+<%= f.text_field :link %>
+</p>
+<p>
+<%= f.label :notes %><br />
+<%= f.text_area :notes %>
+</p>
+  <p><%= f.submit %></p>
+<% end %>
+

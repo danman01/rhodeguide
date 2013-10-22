@@ -1,0 +1,52 @@
+<%marker_code = ""
+Location.all.each.collect {|loc| marker_code += "&markers=#{loc.latitude}%2C#{loc.longitude}" unless loc.latitude.blank?}
+%>
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=true&zoom=14#{marker_code}" %>
+
+<%= form_tag locations_path, :method => :get do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search Near", :name => nil %>
+  </p>
+<% end %>
+<table>
+  <tr>
+    <th>Address</th>
+    <th>Latitude</th>
+    <th>Longitude</th>
+    <th>Neighborhood</th>
+    
+    <th>Beds</th>
+    <th>Bath</th>
+    <th>Price</th>
+    <th>Taxes</th>
+    <th>Realtor Name</th>
+    <th>Phone</th>
+    <th>Link</th>
+    <th>Notes</th>
+    
+  </tr>
+  <% for location in @locations %>
+    <tr>
+      <td><%= location.address %></td>
+      <td><%= location.latitude %></td>
+      <td><%= location.longitude %></td>
+      <td><%= location.neighborhood %></td>
+      
+      <td><%= location.beds %></td>
+      <td><%= location.baths %></td>
+      <td><%= location.price %></td>
+      <td><%= location.taxes %></td>
+      <td><%= location.name %></td>
+      <td><%= location.phone %></td>
+      <td><%= link_to location.link if !location.link.blank?%></td>
+      <td><%= location.notes %></td>
+      
+      <td><%= link_to "Show", location %></td>
+      <td><%= link_to "Edit", edit_location_path(location) %></td>
+      <td><%= link_to "Destroy", location, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Location", new_location_path %></p>
