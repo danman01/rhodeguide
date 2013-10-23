@@ -1,0 +1,16 @@
+
+<table>
+  <tr>
+    <th>Location</th>
+  </tr>
+  <% for key_location in @key_locations %>
+    <tr>
+      <td><%= key_location.location_id %></td>
+      <td><%= link_to "Show", key_location %></td>
+      <td><%= link_to "Edit", edit_key_location_path(key_location) %></td>
+      <td><%= link_to "Destroy", key_location, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Key Location", new_key_location_path %></p>

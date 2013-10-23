@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20131022183708) do
     t.string   "neighborhood"
     t.integer  "taxes"
     t.string   "link"
+    t.float    "distance_to_key"
   end
 
 end

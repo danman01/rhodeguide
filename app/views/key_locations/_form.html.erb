@@ -1,0 +1,8 @@
+<%= form_for @key_location do |f| %>
+  <p>
+    <%= f.label :location_id %><br />
+    <%= f.collection_select(:location_id, Location.all, :id, :address) %>
+  
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

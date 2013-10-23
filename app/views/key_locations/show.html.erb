@@ -1,0 +1,11 @@
+
+<p>
+  <strong>Location:</strong>
+  <%= @key_location.location_id %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_key_location_path(@key_location) %> |
+  <%= link_to "Destroy", @key_location, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", key_locations_path %>
+</p>

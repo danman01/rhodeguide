@@ -23,6 +23,7 @@
         var marker_title_array = new Array();
         var marker_price_array = new Array();
         var marker_link_array = new Array();
+        var marker_key_distance_array = new Array();
         
 
         <%count = 0%>
@@ -33,6 +34,9 @@
           marker_array.push(marker_<%=count%>)
           marker_title_array.push("<%=loc.address%>")
           marker_price_array.push("<%=loc.price%>")
+          <%if KeyLocation.first%>
+            marker_key_distance_array.push("<%=loc.distance_to_key.round(2) rescue nil%> mi")
+          <%end%>
           marker_link_array.push("<a href='/locations/<%=loc.id%>/' target='_blank'>View</a>")
           
         <%end%>
@@ -77,10 +81,13 @@
           for (var i = 0; i < marker_array.length; i++) {
             // set up content bubble
             var contentString = '<div id="content">'+
-              '<div id="siteNotice">Address:</div><div>'+marker_title_array[i]+'</div>'+
-              '<div>Price</div><div>'+marker_price_array[i]+
+              '<div id="siteNotice"><b>Address:</b></div><div>'+marker_title_array[i]+'</div>'+
+              '<div><b>Price:</b></div><div>'+marker_price_array[i]+
               '</div><div id="bodyContent">'+
-              '<div>Link</div>'+marker_link_array[i]+
+              <%if KeyLocation.first%>
+              '<div><b>Distance to <%=KeyLocation.first.location.address%></b></div>'+marker_key_distance_array[i]+
+              <%end%>
+              '<div><b>Link</b></div>'+marker_link_array[i]+
               '</div>'+
               '</div>';
             var infowindow = new google.maps.InfoWindow({
