@@ -7,44 +7,67 @@
     <%= submit_tag "Search Near", :name => nil %>
   </p>
 <% end %>
-<table>
-  <tr>
-    <th>Address</th>
-    <th>Latitude</th>
-    <th>Longitude</th>
-    <th>Neighborhood</th>
+<table class="datatable">
+  <thead>
     
-    <th>Beds</th>
-    <th>Bath</th>
-    <th>Price</th>
-    <th>Taxes</th>
-    <th>Realtor Name</th>
-    <th>Phone</th>
-    <th>Link</th>
-    <th>Notes</th>
-    
-  </tr>
-  <% for location in @locations %>
     <tr>
-      <td><%= location.address %></td>
-      <td><%= location.latitude %></td>
-      <td><%= location.longitude %></td>
-      <td><%= location.neighborhood %></td>
+      <th>Address</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Neighborhood</th>
+      <%if KeyLocation.first%>
+        <th>Distance to Key</th>
+      <%end%>
+      <th>Beds</th>
+      <th>Bath</th>
+      <th>Price</th>
+      <th>Taxes</th>
+      <th>Realtor Name</th>
+      <th>Phone</th>
+      <th>Link</th>
+      <th>Notes</th>
+      <th></th>
+      <th></th>
+      <th></th>
       
-      <td><%= location.beds %></td>
-      <td><%= location.baths %></td>
-      <td><%= location.price %></td>
-      <td><%= location.taxes %></td>
-      <td><%= location.name %></td>
-      <td><%= location.phone %></td>
-      <td><%= link_to location.link if !location.link.blank?%></td>
-      <td><%= location.notes %></td>
-      
-      <td><%= link_to "Show", location %></td>
-      <td><%= link_to "Edit", edit_location_path(location) %></td>
-      <td><%= link_to "Destroy", location, :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
-  <% end %>
+  </thead>
+  <tbody>
+    
+    <% for location in @locations %>
+      <% if KeyLocation.first && KeyLocation.first.location == location %>
+        <tr class="highlight">
+      <% else %>
+        <tr>
+      <% end %>
+        <td><%= location.address %></td>
+        <td><%= location.latitude %></td>
+        <td><%= location.longitude %></td>
+        <td><%= location.neighborhood %></td>
+        <%if KeyLocation.first%>
+          <td><%= location.distance_to_key.round(2) rescue "Not calculated" %></td>
+        <%end%>
+        <td><%= location.beds %></td>
+        <td><%= location.baths %></td>
+        <td><%= number_to_currency(location.price) %></td>
+        <td><%= number_to_currency(location.taxes) %></td>
+        <td><%= location.name %></td>
+        <td><%= location.phone %></td>
+        <td><%= link_to location.link if !location.link.blank?%></td>
+        <td><%= location.notes %></td>
+        
+        <td><%= link_to "Show", location %></td>
+        <td><%= link_to "Edit", edit_location_path(location) %></td>
+        <td><%= link_to "Destroy", location, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </tbody>
+    
 </table>
-
+<%if KeyLocation.first%>
+  <br /><br />
+  <div>
+    Key = <%=KeyLocation.first.location.address%>
+  </div><br /><br />
+<% end %>
 <p><%= link_to "New Location", new_location_path %></p>

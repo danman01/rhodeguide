@@ -16,6 +16,9 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARK8bc7O2RwO0m4uXdsKXPFNAG5v4ndic&sensor=true">
     </script>
     <script type="text/javascript">
+      $(function(){
+        $('.datatable').dataTable({})
+      })
     </script>
     <%if defined?(@locations)%>
       <script type="text/javascript" charset="utf-8">

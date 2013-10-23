@@ -5,6 +5,16 @@ class Location < ActiveRecord::Base
   after_validation :calculate_distance_to_key_location, :if => lambda{ |obj| obj.address_changed? }
   has_one :key_location
 
+  # setters to only allow digits
+  def price=(price)
+    write_attribute(:price, price.gsub(/\D/, ''))
+  end
+  # setters to only allow digits
+  def taxes=(taxes)
+    write_attribute(:taxes, taxes.gsub(/\D/, ''))
+  end
+
+
   private
   def calculate_distance_to_key_location
     if key_location = KeyLocation.first # lazy get first key location
