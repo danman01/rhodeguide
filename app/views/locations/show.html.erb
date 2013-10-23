@@ -1,11 +1,13 @@
 <div id="map-canvas"></div>
 
 <h3>Nearby locations</h3>
+<!--
 <ul>
-<% for location in @location.nearbys(10) %>
-  <li><%= link_to location.address, location %> (<%= location.distance.round(2) %> miles)</li>
-<% end %>
+<%# for location in @location.nearbys(10) %>
+  <li><%#= link_to location.address, location %> (<%#= location.distance.round(2) %> miles)</li>
+<%# end %>
 </ul>
+-->
 <p>
   <strong>Address:</strong>
   <%= @location.address %>
