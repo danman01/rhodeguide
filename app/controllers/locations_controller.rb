@@ -9,6 +9,7 @@ class LocationsController < ApplicationController
 
   def show
     @location = Location.find(params[:id])
+    @locations = [@location]
   end
 
   def new
@@ -26,6 +27,8 @@ class LocationsController < ApplicationController
 
   def edit
     @location = Location.find(params[:id])
+    @locations = [@location]
+    
   end
 
   def update

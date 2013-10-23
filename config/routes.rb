@@ -1,4 +1,5 @@
 Rhodeguide::Application.routes.draw do
+  resources :key_locations
   resources :locations
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
