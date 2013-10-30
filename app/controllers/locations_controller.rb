@@ -1,5 +1,5 @@
 class LocationsController < ApplicationController
-  before_filer! :authenticate_user,:only=>[:new]
+  before_filter :authenticate_user!,:only=>[:new]
 
   def index
     if params[:search].present?
