@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
-# Use sqlite3 as the database for Active Record
+# Use postgresql as the database for Active Record
 gem 'pg'
 
 # Use SCSS for stylesheets
@@ -19,11 +19,17 @@ gem 'nifty-generators'
 gem 'geocoder'
 gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
 
-# devise
+# authentication with devise
 gem 'devise'
 
-# heroku
-gem 'rails_12factor', group: :production
+# bootstrap framework
+gem "bootstrap-sass"
+
+# rails env stuff
+gem 'figaro'
+
+# roles
+gem 'easy_roles'
 
 # turbolinks help
 gem 'jquery-turbolinks'
@@ -45,16 +51,35 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+group :development, :test do
+  gem 'debugger'
+  gem 'delorean'
+  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'pry'
+  gem 'pry-rails'
+end
 
-# Use unicorn as the app server
-# gem 'unicorn'
+group :development do
+  gem 'bullet'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request'
+end
 
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
+group :test do
+  gem 'capybara'
+  gem 'coveralls', require: false
+  gem 'database_cleaner'
+  gem 'email_spec'
+  gem 'launchy'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'selenium-webdriver'
+  gem 'simplecov', require: false
+  gem 'webmock', require: false
+end
 
-# Use debugger
-gem 'debugger', group: [:development, :test]
-
-gem "mocha", group: :test
+group :staging, :production do
+  gem 'rails_12factor'
+end

@@ -6,6 +6,12 @@ Rhodeguide::Application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
+  # mailer setup for devise
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  # mailcatcher setup (outside of gemfile, do gem install mailcatcher. then start the server with mailcatcher
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
+
   # Do not eager load code on boot.
   config.eager_load = false
 

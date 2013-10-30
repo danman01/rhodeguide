@@ -1,4 +1,5 @@
 Rhodeguide::Application.routes.draw do
+  devise_for :users
   resources :key_locations
   resources :locations
   # The priority is based upon order of creation: first created -> highest priority.
