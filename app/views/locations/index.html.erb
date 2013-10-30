@@ -13,8 +13,9 @@
     
     <tr>
       <th>Address</th>
+<!-- Hiding lat/long
       <th>Latitude</th>
-      <th>Longitude</th>
+      <th>Longitude</th> -->
       <th>Neighborhood</th>
       <%if KeyLocation.first%>
         <th>Distance to Key</th>
@@ -42,8 +43,9 @@
         <tr>
       <% end %>
         <td><%= location.address %></td>
+<!-- Hiding lat/long        
         <td><%= location.latitude %></td>
-        <td><%= location.longitude %></td>
+        <td><%= location.longitude %></td> -->
         <td><%= location.neighborhood %></td>
         <%if KeyLocation.first%>
           <td><%= location.distance_to_key.round(2) rescue "Not calculated" %></td>
