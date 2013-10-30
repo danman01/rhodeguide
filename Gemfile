@@ -19,6 +19,9 @@ gem 'nifty-generators'
 gem 'geocoder'
 gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
 
+# devise
+gem 'devise'
+
 # heroku
 gem 'rails_12factor', group: :production
 
