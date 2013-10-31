@@ -4,7 +4,7 @@ class Location < ActiveRecord::Base
   after_validation :geocode, :if => lambda{ |obj| obj.address_changed? }
   after_save :calculate_distance_to_key_location, :if => lambda{ |obj| obj.address_changed? }
   # TODO key_location distances
-  has_one :key_location
+  has_many :key_distances
   belongs_to :user
 
   # setters to only allow digits
@@ -19,23 +19,33 @@ class Location < ActiveRecord::Base
   def update_distance_to_key(loc)
     if self.geocoded?
       distance = Geocoder::Calculations.distance_between(self,[loc.latitude,loc.longitude]) rescue nil
-      self.distance_to_key = distance
-      self.save if self.valid?
+      # build new key_distance
+      key_distance = self.key_distances.build()
+      # lazy just looking at drive distance 
+      key_distance.drive_distance = distance
+      if key_distance.save
+        puts "key distance saved!"
+      end
     end
   end
 
   private
   def calculate_distance_to_key_location
-    if key_location = KeyLocation.first # lazy get first key location
-      loc = key_location.location
-      if loc == self # key location is THIS location, update all other locations
-        Location.all.each do |location|
-          location.update_distance_to_key(loc)
-        end
-      else
-        self.update_distance_to_key(loc)      
+    user = self.user
+    
+    if self.is_key? # if a key location is changed, update all the others
+      loc = self
+      # get location user, then get all that users' locations, and update them
+      user.locations.each do |location|
+        location.update_distance_to_key(loc)
       end
-      
+    else
+      # location just needs distances to know key locatinos for itself. other locations remain untouched
+       keys = user.locations.where(:is_key => true)
+       keys.each do |key|
+         self.update_distance_to_key(key)      
+       end
     end
+      
   end
 end

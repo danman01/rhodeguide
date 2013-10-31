@@ -1,4 +1,4 @@
-class KeyLocationsController < ApplicationController
+class KeyDistancesController < ApplicationController
   def index
     @key_locations = KeyLocation.all
   end

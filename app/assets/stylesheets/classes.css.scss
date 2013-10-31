@@ -4,7 +4,7 @@
         margin: 0 auto;
         padding: 20px;
         overflow-y:auto;
-        width:33%;
+        width:40%;
 }
 
 .box{
@@ -20,11 +20,13 @@
         margin-top: 20px;
 }
 .center {margin:0 auto;text-align:center;}
+.content {margin-top:60px;margin-bottom:60px;}
 .form-horizontal .control-label{width:40%;text-align:left;margin-top:10px;margin-left:25px;}
 /*highlight*/
 .highlight, table.dataTable tr.even.highlight, table.dataTable tr.odd.highlight{background-color:#71A2D0
 ;}
 .inline {display:inline;}
-.no-bg{background:none !important;}
-.no-border{border:none !important;}
+.no-bg{background:none;}
+.no-border{border:none;}
+span.normal-text, div.normal-text{font-size:16px;}
 

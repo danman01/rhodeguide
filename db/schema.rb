@@ -11,15 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131030165125) do
+ActiveRecord::Schema.define(version: 20131031211422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "key_locations", force: true do |t|
+  create_table "key_distances", force: true do |t|
     t.integer  "location_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "key_location_id"
+    t.float    "bike_distance"
+    t.text     "bike_directions"
+    t.time     "bike_time"
+    t.float    "walk_distance"
+    t.text     "walk_directions"
+    t.float    "walk_time"
+    t.float    "transit_distance"
+    t.text     "transit_directions"
+    t.time     "transit_time"
+    t.float    "drive_distance"
+    t.text     "drive_directions"
+    t.time     "drive_time"
   end
 
   create_table "locations", force: true do |t|
@@ -37,8 +50,8 @@ ActiveRecord::Schema.define(version: 20131030165125) do
     t.string   "neighborhood"
     t.integer  "taxes"
     t.string   "link"
-    t.float    "distance_to_key"
     t.integer  "user_id"
+    t.boolean  "is_key"
   end
 
   add_index "locations", ["user_id"], name: "index_locations_on_user_id", unique: true, using: :btree

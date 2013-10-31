@@ -2,8 +2,13 @@ class LocationsController < ApplicationController
   before_filter :authenticate_user!,:only=>[:new]
 
   def index
-    if params[:search].present?
-      @locations = Location.near(params[:search], 5, :order => :distance_to_key)
+    if current_user
+      if params[:search].present?
+        @locations = current_user.locations.near(params[:search], 5, :order => :distance_to_key)
+      else
+        @locations = current_user.locations
+      end
+
     else
       @locations = Location.all
     end
@@ -51,6 +56,6 @@ class LocationsController < ApplicationController
   private
 
   def location_params
-    params.require(:location).permit(:address,:latitude,:longitude,:beds,:baths,:price,:phone,:name,:notes,:neighborhood,:taxes,:link)
+    params.require(:location).permit(:user_id,:is_key,:address,:latitude,:longitude,:beds,:baths,:price,:phone,:name,:notes,:neighborhood,:taxes,:link)
   end
 end

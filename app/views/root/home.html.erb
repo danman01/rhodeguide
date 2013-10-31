@@ -18,44 +18,15 @@
 <div class="box">
   <h1 class="center">Be close to what matters to you</p>
   <div class="center form-container">
-    
-    <%= form_for(User.new, :validate => true, :url => registration_path('user'), :html => {:class => "form-horizontal block-form", :autocomplete => "off"}) do |f| %>
-      <fieldset>
-        <div class="control-group">
-          <label class="control-label" for="user_email">
-              <%= "Email" %>
-          </label>
-
-          <div class="controls">
-              <%= f.email_field :email, :placeholder => "luke@hoth.net", :title => "Enter New Email", :required => true, class: 'no-bg no-border' %>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <label class="control-label" for="user_password">
-              <%= "Password" %>
-          </label>
-
-          <div class="controls">
-              <%= f.password_field :password, :placeholder => "••••••••", :title => "Enter Password", :required => true, :pattern => "......+" %>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <label class="control-label" for="user_password_confirmation">
-              <%= "Password Confirmation"%>
-          </label>
-
-          <div class="controls">
-              <%= f.password_field :password_confirmation, :placeholder => "••••••••", :title => "Enter password again", :required => true, :pattern => "......+" %>
-          </div>
-        </div>
-      </fieldset>
-      <p class="center">
-        <%= f.submit "Get Started", :class => "btn", :disable_with => "Submitting..." %>
-      
-      </p>
-    <% end %>
+    <%unless user_signed_in?%> 
+      <%= render 'sign_in_form' %>
+    <%else%>
+      <div class="normal-text">
+        You have entered <%=pluralize(current_user.locations.size,"locations")%>
+        <br />
+        Manage them <%= link_to "here", locations_path %>
+      </div>
+     <% end %>
   </div>
   
   
