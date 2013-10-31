@@ -7,13 +7,13 @@ gem 'rails', '4.0.0'
 gem 'pg'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
+gem 'sass-rails'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails'
 
 gem 'nifty-generators'
 gem 'geocoder'
@@ -26,13 +26,16 @@ gem 'devise'
 gem "bootstrap-sass"
 
 # rails env stuff
-gem 'figaro'
+# dependency conflicts...gem 'figaro', github: 'laserlemon/figaro'
 
 # roles
 gem 'easy_roles'
 
 # turbolinks help
 gem 'jquery-turbolinks'
+
+# background image stretch
+gem 'backstretch-rails'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -62,16 +65,16 @@ end
 
 group :development do
   gem 'bullet'
-  gem 'better_errors'
-  gem 'binding_of_caller'
+  # gem 'better_errors'
+  # rails 4 problem gem 'binding_of_caller'
   gem 'meta_request'
 end
 
 group :test do
-  gem 'capybara'
-  gem 'coveralls', require: false
+  # depends on mime type 2.0...gem 'capybara'
+  # gem 'coveralls', require: false
   gem 'database_cleaner'
-  gem 'email_spec'
+  # has lower dependecy...cannot user for now...gem 'email_spec'
   gem 'launchy'
   gem 'rspec'
   gem 'rspec-rails'

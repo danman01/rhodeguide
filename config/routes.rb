@@ -1,12 +1,20 @@
 Rhodeguide::Application.routes.draw do
+  
   devise_for :users
   resources :key_locations
   resources :locations
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
+  
+  get "root/home"
+  get "root/about"
+  get "root/faq"
+  get "root/team"
+
   # You can have the root of your site routed with "root"
-  root 'locations#index'
+  root 'root#home'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

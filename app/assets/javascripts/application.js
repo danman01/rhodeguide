@@ -16,4 +16,5 @@
 //= require dataTables/jquery.dataTables
 //= require turbolinks
 //= require bootstrap
+//= require 'jquery.backstretch'
 //= require_tree .

@@ -1,0 +1,65 @@
+<%= content_for :head do %>
+  <script type="text/javascript" charset="utf-8">
+    $(function(){
+       $.backstretch([
+        "http://photos1.usa-pictures.com/pictures/USA/CA/USA-California-San%20Francisco-2--98161248-.jpg",
+        "http://photos1.usa-pictures.com/pictures/USA/NY/USA-New-york-Corning-36318638-IMG.jpg",
+        "http://photos1.usa-pictures.com/pictures/USA/NY/USA-New-york-New%20York-2651247-071.jpg",
+        "http://photos1.usa-pictures.com/pictures/USA/NY/USA-New-york-New%20York-0--43823362-.jpg"
+      ], {
+          fade: 3000,
+          duration: 5000
+      });
+    })
+
+  </script>
+<% end %>
+
+<div class="box">
+  <h1 class="center">Be close to what matters to you</p>
+  <div class="center form-container">
+    
+    <%= form_for(User.new, :validate => true, :url => registration_path('user'), :html => {:class => "form-horizontal block-form", :autocomplete => "off"}) do |f| %>
+      <fieldset>
+        <div class="control-group">
+          <label class="control-label" for="user_email">
+              <%= "Email" %>
+          </label>
+
+          <div class="controls">
+              <%= f.email_field :email, :placeholder => "luke@hoth.net", :title => "Enter New Email", :required => true, class: 'no-bg no-border' %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="user_password">
+              <%= "Password" %>
+          </label>
+
+          <div class="controls">
+              <%= f.password_field :password, :placeholder => "••••••••", :title => "Enter Password", :required => true, :pattern => "......+" %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="user_password_confirmation">
+              <%= "Password Confirmation"%>
+          </label>
+
+          <div class="controls">
+              <%= f.password_field :password_confirmation, :placeholder => "••••••••", :title => "Enter password again", :required => true, :pattern => "......+" %>
+          </div>
+        </div>
+      </fieldset>
+      <p class="center">
+        <%= f.submit "Get Started", :class => "btn", :disable_with => "Submitting..." %>
+      
+      </p>
+    <% end %>
+  </div>
+  
+  
+</div>
+
+            
+           
