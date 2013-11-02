@@ -29,6 +29,10 @@
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   <!-- load google maps javascript api v3 -->
     <script type="text/javascript"
+      //
+      // BEGIN MAP JS
+      //
+
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARK8bc7O2RwO0m4uXdsKXPFNAG5v4ndic&sensor=true">
     </script>
     <%if defined?(@locations)%>
@@ -83,23 +87,18 @@
         }
 
       function initialize() {
-        if(marker_array.length > 0){
-          center = marker_array[0]
-        } else {
-          lat = navigator.position.coords.latitude
-          lng = navigator.position.coords.longitude
-          center = new google.maps.LatLng(lat,lng)
-          console.log("got coordinates of lat "+lat+", and lng of "+lng);
-        }
-        console.log(center);
         var mapOptions = {
           zoom: 13,
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          center: center
+          mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
         map = new google.maps.Map(document.getElementById('map-canvas'),
-                mapOptions);
+            mapOptions);
+
+        // set center of map
+        setCenter(map);
+        
+        // set markers 
         if(marker_array.length > 0){
           for (var i = 0; i < marker_array.length; i++) {
             // see if there's a distance array to print out
@@ -138,7 +137,51 @@
           });
       }
       google.maps.event.addDomListener(window, 'load', initialize);
+      
+      function setCenter(map){
+        if(marker_array.length > 0){
+            map.setCenter(marker_array[0],13);
+          } else {
+            var options = {
+              enableHighAccuracy: true,
+              timeout: 5000,
+              maximumAge: 0
+            };          
+            //lat = navigator.GeoLocation.getPosition.coords.latitude
+            //lng = navigator.position.coords.longitude
+            navigator.geolocation.getCurrentPosition(success,error,options)
+          }
+      }
+      function success(position){
+        pos = new google.maps.LatLng(position.coords.latitude, 
+          position.coords.longitude)
+        map.setCenter(pos, 13);
+        console.log("success!");
+        // add marker for current loc
+        var infowindow = new google.maps.InfoWindow({
+            content: "<span>CurrentLocation</span>"
+          });
+          marker = new google.maps.Marker({
+            map:map,
+            draggable:false,
+            animation: google.maps.Animation.DROP,
+            position: pos,
+            title: "Current Location"
+          });
+          add_click_event(marker,infowindow)
+          
 
+      }
+      function error(){
+        // set default center
+        map.setCenter(new google.maps.LatLng(43, 72),13);
+    
+        console.log("Error getting coords!")
+      }
+
+      //
+      // END MAP JS
+      //
     </script>
   <%end%> <%# if defined locations%>
 
