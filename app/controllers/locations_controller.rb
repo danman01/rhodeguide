@@ -1,5 +1,5 @@
 class LocationsController < ApplicationController
-  before_filter :authenticate_user!,:only=>[:new]
+  before_filter :authenticate_user!,:only=>[:new,:create,:edit,:update,:destroy]
 
   def index
     if current_user
@@ -12,6 +12,7 @@ class LocationsController < ApplicationController
     else
       @locations = Location.all
     end
+    @key_locations = @locations.where(:is_key => true)
   end
 
   def show

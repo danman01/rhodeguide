@@ -3,7 +3,6 @@ class Location < ActiveRecord::Base
   validates_uniqueness_of :address, :latitude,:longitude
   after_validation :geocode, :if => lambda{ |obj| obj.address_changed? }
   after_save :calculate_distance_to_key_location, :if => lambda{ |obj| obj.address_changed? }
-  # TODO key_location distances
   has_many :key_distances
   belongs_to :user
 

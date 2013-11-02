@@ -13,13 +13,11 @@
     
     <tr>
       <th>Address</th>
-<!-- Hiding lat/long
+      <!-- Hiding lat/long
       <th>Latitude</th>
       <th>Longitude</th> -->
       <th>Neighborhood</th>
-      <%if KeyLocation.first%>
-        <th>Distance to Key</th>
-      <%end%>
+      <th>Distance to Key</th>
       <th>Beds</th>
       <th>Bath</th>
       <th>Price</th>
@@ -37,19 +35,22 @@
   <tbody>
     
     <% for location in @locations %>
-      <% if KeyLocation.first && KeyLocation.first.location == location %>
+      <% if location.is_key %>
         <tr class="highlight">
       <% else %>
         <tr>
       <% end %>
         <td><%= location.address %></td>
-<!-- Hiding lat/long        
-        <td><%= location.latitude %></td>
-        <td><%= location.longitude %></td> -->
+      <!-- Hiding lat/long        
+        <td><%#= location.latitude %></td>
+        <td><%#= location.longitude %></td> -->
         <td><%= location.neighborhood %></td>
-        <%if KeyLocation.first%>
-          <td><%= location.distance_to_key.round(2) rescue "Not calculated" %></td>
-        <%end%>
+        <td>
+          <%# TODO refactor and put in helper %>
+          <%[{key_distance.walk_distance=>"walking"},{key_distance.bike_distance=>"biking"},{key_distance.transit_distance=>"transit"},{key_distance.drive_distance=>"driving"}].each do |dist,name|%>
+            <span><%="#{name}: #{dist.round(2)}" rescue 'Not calculated'%> mi</span>
+          <% end %>
+        </td>
         <td><%= location.beds %></td>
         <td><%= location.baths %></td>
         <td><%= number_to_currency(location.price) %></td>
@@ -67,10 +68,11 @@
   </tbody>
     
 </table>
-<%if KeyLocation.first%>
   <br /><br />
   <div>
-    Key = <%=KeyLocation.first.location.address%>
+    Keys:
+    <% @key_locations.each do |key_location| %>
+      <%=key_location.location.address%> <br />
+    <% end %>
   </div><br /><br />
-<% end %>
 <p><%= link_to "New Location", new_location_path %></p>

@@ -57,8 +57,14 @@
           marker_array.push(marker_<%=count%>)
           marker_title_array.push("<%=loc.address%>")
           marker_price_array.push("<%=loc.price%>")
-          <%if KeyLocation.first%>
-            marker_key_distance_array.push("<%=loc.distance_to_key.round(2) rescue nil%> mi")
+          <%unless loc.key_distances.empty? %>
+            <%# put all distances to key in the key distance array%>
+            <% loc.key_distances.each do |key_distance| %>
+              <%# go through each type of distance%>
+              <%[{key_distance.walk_distance=>"walking"},{key_distance.bike_distance=>"biking"},{key_distance.transit_distance=>"transit"},{key_distance.drive_distance=>"driving"}].each do |dist,name|%>
+                marker_key_distance_array.push('<%="#{name}: #{dist.round(2) rescue nil}"%> mi ')
+              <% end %>
+            <% end %>
           <%end%>
           marker_link_array.push("<a href='/locations/<%=loc.id%>/' target='_blank'>View</a>")
           
@@ -107,9 +113,9 @@
               '<div id="siteNotice"><b>Address:</b></div><div>'+marker_title_array[i]+'</div>'+
               '<div><b>Price:</b></div><div>'+marker_price_array[i]+
               '</div><div id="bodyContent">'+
-              <%if KeyLocation.first%>
-              '<div><b>Distance to <%=KeyLocation.first.location.address%></b></div>'+marker_key_distance_array[i]+
-              <%end%>
+              if (marker_key_distance_array.length > 0){
+                marker_key_distance_array[i]+
+              }
               '<div><b>Link</b></div>'+marker_link_array[i]+
               '</div>'+
               '</div>';

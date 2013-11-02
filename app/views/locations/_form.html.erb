@@ -1,19 +1,23 @@
 <%= form_for @location do |f| %>
   <p>
-<%= f.hidden_field :user_id, :value=>current_user.id %>
-<%= f.label :address %><br />
-<%= f.text_field :address %>
-</p>
-<% if params[:action]=="edit" %>
-<p>
-<%= f.label :latitude %><br />
-<%= f.text_field :latitude %>
-</p>
-<p>
-<%= f.label :longitude %><br />
-<%= f.text_field :longitude %>
-</p>
-<% end %>
+    <%= f.check_box :is_key,class: 'inline' %>
+    <%= f.label :is_key,"Is this a key location?",class:'inline' %>
+  </p>
+  <p>
+    <%= f.hidden_field :user_id, :value=>current_user.id %>
+    <%= f.label :address %><br />
+    <%= f.text_field :address %>
+  </p>
+  <% if params[:action]=="edit" %>
+    <p>
+      <%= f.label :latitude %><br />
+      <%= f.text_field :latitude %>
+    </p>
+    <p>
+      <%= f.label :longitude %><br />
+      <%= f.text_field :longitude %>
+    </p>
+  <% end %>
 <p><%= f.label :neighborhood %><br />
   <%= f.text_field :neighborhood %>
 </p>
