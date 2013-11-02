@@ -63,9 +63,9 @@
 $(function(){ 
 $('.pChk').click(function() {
     if( $('.pChk:checked').length > 0 ) {
-        $("#potential_places").hide();
+        $("#potential_places").fadeOut('slow');
     } else {
-        $("#potential_places").show();
+        $("#potential_places").fadeIn('slow');
     }
 });
  })
