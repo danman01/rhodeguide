@@ -27,18 +27,9 @@
   <![endif]-->
 
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { height: 50% }
-    </style>
+  <!-- load google maps javascript api v3 -->
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARK8bc7O2RwO0m4uXdsKXPFNAG5v4ndic&sensor=true">
-    </script>
-    <script type="text/javascript">
-      $(function(){
-        $('.datatable').dataTable({})
-      })
     </script>
     <%if defined?(@locations)%>
       <script type="text/javascript" charset="utf-8">
@@ -95,7 +86,10 @@
         if(marker_array.length > 0){
           center = marker_array[0]
         } else {
-          center = new google.maps.LatLng(41.82, 71.42)
+          lat = navigator.position.coords.latitude
+          lng = navigator.position.coords.longitude
+          center = new google.maps.LatLng(lat,lng)
+          console.log("got coordinates of lat "+lat+", and lng of "+lng);
         }
         console.log(center);
         var mapOptions = {
@@ -108,14 +102,19 @@
                 mapOptions);
         if(marker_array.length > 0){
           for (var i = 0; i < marker_array.length; i++) {
+            // see if there's a distance array to print out
+             if (marker_key_distance_array.length > 0){
+               distance_text = marker_key_distance_array[i]
+             } else {
+               distance_text = ""
+             }
+
             // set up content bubble
             var contentString = '<div id="content">'+
               '<div id="siteNotice"><b>Address:</b></div><div>'+marker_title_array[i]+'</div>'+
               '<div><b>Price:</b></div><div>'+marker_price_array[i]+
               '</div><div id="bodyContent">'+
-              if (marker_key_distance_array.length > 0){
-                marker_key_distance_array[i]+
-              }
+              '</div><div>'+distance_text+'</div>'+
               '<div><b>Link</b></div>'+marker_link_array[i]+
               '</div>'+
               '</div>';
@@ -149,8 +148,9 @@
 
 <body class="<%=params[:controller]%> <%=params[:action]%>">
   <%= render "layouts/messages" %>
+  <%= yield %>
+  
   <div class="container">
-    <%= yield %>
     
   </div>
 
