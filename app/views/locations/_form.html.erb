@@ -1,7 +1,7 @@
 <%= form_for @location do |f| %>
   <p>
-    <%= f.check_box :is_key,class: 'inline' %>
-    <%= f.label :is_key,"Is this a key location?",class:'inline' %>
+    <%= f.check_box :is_key,class: 'inline pChk' %>
+    <%= f.label :is_key,"Check this box when entering a key location (school, work, etc)",class:'inline' %>
   </p>
   <p>
     <%= f.hidden_field :user_id, :value=>current_user.id %>
@@ -18,6 +18,7 @@
       <%= f.text_field :longitude %>
     </p>
   <% end %>
+<div id="potential_places">
 <p><%= f.label :neighborhood %><br />
   <%= f.text_field :neighborhood %>
 </p>
@@ -50,10 +51,23 @@
 <%= f.label :link %><br />
 <%= f.text_field :link %>
 </p>
+</div>
 <p>
 <%= f.label :notes %><br />
 <%= f.text_area :notes %>
 </p>
   <p><%= f.submit "Create Location", class: 'btn' %></p>
 <% end %>
+
+<script type="text/javascript">
+$(function(){ 
+$('.pChk').click(function() {
+    if( $('.pChk:checked').length > 0 ) {
+        $("#potential_places").hide();
+    } else {
+        $("#potential_places").show();
+    }
+});
+ })
+</script>
 
