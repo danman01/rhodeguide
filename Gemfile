@@ -70,18 +70,19 @@ group :development do
   gem 'meta_request'
 end
 
-group :test do
-  # depends on mime type 2.0...gem 'capybara'
-  # gem 'coveralls', require: false
-  gem 'database_cleaner'
-  # has lower dependecy...cannot user for now...gem 'email_spec'
-  gem 'launchy'
-  gem 'rspec'
-  gem 'rspec-rails'
-  gem 'selenium-webdriver'
-  gem 'simplecov', require: false
-  gem 'webmock', require: false
-end
+
+# group :test do
+#   # depends on mime type 2.0...gem 'capybara'
+#   # gem 'coveralls', require: false
+#   gem 'database_cleaner'
+#   # has lower dependecy...cannot user for now...gem 'email_spec'
+#   gem 'launchy'
+#   gem 'rspec'
+#   gem 'rspec-rails'
+#   gem 'selenium-webdriver'
+#   gem 'simplecov', require: false
+#   gem 'webmock', require: false
+# end
 
 group :staging, :production do
   gem 'rails_12factor'
