@@ -1,4 +1,11 @@
 <%= form_for @location do |f| %>
+  <% if @location.errors.any? %>
+    <ul>
+      <% @location.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
   <p>
     <%= f.check_box :is_key,class: 'inline pChk' %>
     <%= f.label :is_key,"Check this box when entering a key location (school, work, etc)",class:'inline' %>

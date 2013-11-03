@@ -1,5 +1,4 @@
 
-<div id="map-canvas"></div>
 
 <%#= form_tag locations_path, :method => :get do %>
  <!-- <p>
@@ -47,9 +46,15 @@
         <td><%= location.neighborhood %></td>
         <td>
           <%# TODO refactor and put in helper %>
-          <%[{key_distance.walk_distance=>"walking"},{key_distance.bike_distance=>"biking"},{key_distance.transit_distance=>"transit"},{key_distance.drive_distance=>"driving"}].each do |dist,name|%>
-            <span><%="#{name}: #{dist.round(2)}" rescue 'Not calculated'%> mi</span>
+          <% location.key_distances.each do |key_distance| %>
+            <% if key_distance.key_location %>
+              <p><%= key_distance.key_location.address %></p>
+              <%[{key_distance.walk_distance=>"walking"},{key_distance.bike_distance=>"biking"},{key_distance.transit_distance=>"transit"},{key_distance.drive_distance=>"driving"}].each do |keyvalue|%>
+                <% if keyvalue[0]%><span><%="#{keyvalue[1]}: #{keyvalue[0].round(2)}"%></span><br /><%end%>
+              <% end %>
+            <% end %>
           <% end %>
+          <br />
         </td>
         <td><%= location.beds %></td>
         <td><%= location.baths %></td>
@@ -72,7 +77,7 @@
   <div>
     Keys:
     <% @key_locations.each do |key_location| %>
-      <%=key_location.location.address%> <br />
+      <%=key_location.address%> <br />
     <% end %>
   </div><br /><br />
 <p><%= link_to "New Location", new_location_path %></p>

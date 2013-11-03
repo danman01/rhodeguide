@@ -191,10 +191,12 @@
 
 <body class="<%=params[:controller]%> <%=params[:action]%>">
   <%= render "layouts/messages" %>
-  <%= yield %>
+  <div id="map-canvas"></div>
   
-  <div class="container">
-    
+  
+  <div class="wrapper">
+    <%= yield %>
+     
   </div>
 
   

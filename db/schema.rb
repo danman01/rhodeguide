@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131031211422) do
+ActiveRecord::Schema.define(version: 20131102233454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,8 @@ ActiveRecord::Schema.define(version: 20131031211422) do
     t.time     "drive_time"
   end
 
+  add_index "key_distances", ["location_id", "key_location_id"], name: "index_key_distances_on_location_id_and_key_location_id", unique: true, using: :btree
+
   create_table "locations", force: true do |t|
     t.string   "address"
     t.float    "latitude"
@@ -54,7 +56,7 @@ ActiveRecord::Schema.define(version: 20131031211422) do
     t.boolean  "is_key"
   end
 
-  add_index "locations", ["user_id"], name: "index_locations_on_user_id", unique: true, using: :btree
+  add_index "locations", ["user_id"], name: "index_locations_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",       null: false
