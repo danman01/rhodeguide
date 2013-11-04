@@ -191,12 +191,14 @@
 
 <body class="<%=params[:controller]%> <%=params[:action]%>">
   <%= render "layouts/messages" %>
-  <div id="map-canvas"></div>
+  <%if defined?(@show_map) && @show_map == true%>
+    <%# for some reason, map-canvas HATES being in a wrapper div... %>
+    <div id="map-canvas"></div>
+  <%end%>
   
   
-  <div class="wrapper">
+  <div style="margin-top:60px;">
     <%= yield %>
-     
   </div>
 
  <div class="footer" style="min-height:60px;">

@@ -2,6 +2,7 @@ class LocationsController < ApplicationController
   before_filter :authenticate_user!,:only=>[:new,:create,:edit,:update,:destroy]
 
   def index
+    @show_map = true
     if current_user
       if params[:search].present?
         @locations = current_user.locations.near(params[:search], 5, :order => :distance_to_key)
@@ -16,6 +17,7 @@ class LocationsController < ApplicationController
   end
 
   def show
+    @show_map = true
     @location = Location.find(params[:id])
     @locations = [@location]
   end

@@ -1,12 +1,23 @@
+<%= content_for :head do %>
+  <script type="text/javascript" charset="utf-8">
+    $(function(){
+      $(".loc").click(function(){
+        var flightPlanCoordinates = [
+          new google.maps.LatLng($(self).data("lat"),$(self).data("lng"))
+        ];
+      var flightPath = new google.maps.Polyline({
+        path: flightPlanCoordinates,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+      });
 
-
-<%#= form_tag locations_path, :method => :get do %>
- <!-- <p>
-    <%#= text_field_tag :search, params[:search] %>
-    <%#= submit_tag "Search Near", :name => nil %>
-  </p>
- -->
-<%# end %>
+      flightPath.setMap(map);
+      })
+    })
+  </script>
+<% end %>
 <table class="datatable">
   <thead>
     
@@ -39,19 +50,18 @@
       <% else %>
         <tr>
       <% end %>
-        <td><%= location.address %></td>
+      <td class="loc loc_<%=location.id%>"><%= location.address %></td>
       <!-- Hiding lat/long        
         <td><%#= location.latitude %></td>
         <td><%#= location.longitude %></td> -->
         <td><%= location.neighborhood %></td>
         <td>
-          <%# TODO refactor and put in helper %>
           <% location.key_distances.each do |key_distance| %>
-            <% if key_distance.key_location %>
-              <p><%= key_distance.key_location.address %></p>
-              <%[{key_distance.walk_distance=>"walking"},{key_distance.bike_distance=>"biking"},{key_distance.transit_distance=>"transit"},{key_distance.drive_distance=>"driving"}].each do |keyvalue|%>
-                <% if keyvalue[0]%><span><%="#{keyvalue[1]}: #{keyvalue[0].round(2)}"%></span><br /><%end%>
-              <% end %>
+            <% if (key_loc = key_distance.key_location) && key_loc != location %>
+              <p><%= key_loc.address %>: 
+                 <%# just showing driving distance for now...%>
+                <%=key_distance.drive_distance.round(2)  %>
+              </p>
             <% end %>
           <% end %>
           <br />

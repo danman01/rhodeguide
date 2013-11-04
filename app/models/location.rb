@@ -16,27 +16,40 @@ class Location < ActiveRecord::Base
     write_attribute(:taxes, taxes.gsub(/\D/, ''))
   end
 
+  # updates the distance between the passed in location in the object that is calilng this method, which is another location
+  # second param, self_is_key, helps the new key_distance table entry by creating the appropriate associations
   def update_distance_to_key(loc, self_is_key)
-    # if location (self) is a key location, then loc refers to each of the users' other locations (non-keys)
-    if self_is_key
-      key_location_id = self.id
+    # do not calculate for own distance to itself
+    if self == loc
+      puts "self is loc..returning..."
+      return
     else
-      key_location_id = loc.id
-    end
-    if self.geocoded?
-      distance = Geocoder::Calculations.distance_between(self,[loc.latitude,loc.longitude]) rescue nil
-      # build new key_distance
-      key_distance = self.key_distances.build()
-      key_distance.key_location_id = key_location_id
-      # lazy just looking at drive distance 
-      key_distance.drive_distance = distance
-      if key_distance.save
-        puts "key distance saved!"
+      # if location (self) is a key location, then loc refers to each of the users' other locations (non-keys)
+      if self_is_key
+        key_location_id = self.id
+      else
+        key_location_id = loc.id
+      end
+      if self.geocoded?
+        distance = Geocoder::Calculations.distance_between(self,[loc.latitude,loc.longitude]) rescue nil
+        # build new key_distance
+        key_distance = self.key_distances.build()
+        key_distance.key_location_id = key_location_id
+        # lazy just looking at drive distance 
+        key_distance.drive_distance = distance
+        if key_distance.save
+          puts "\n =================== \n key distance saved!\n ==================="
+          puts key_distance.to_yaml
+        end
       end
     end
   end
 
   private
+  # after location is saved and the address is updated, run this method
+  # This should either do:
+  # if location is a key location (is_key), update all other locations' keyDistance entry with respect to this key location
+  # else update just this locations' key distance entries with respect to other key distances
   def calculate_key_distances
     user = self.user
     
