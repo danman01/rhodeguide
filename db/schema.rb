@@ -11,10 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131102233454) do
+ActiveRecord::Schema.define(version: 20131108150317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "groups", force: true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "key_distances", force: true do |t|
     t.integer  "location_id"
@@ -33,6 +41,7 @@ ActiveRecord::Schema.define(version: 20131102233454) do
     t.float    "drive_distance"
     t.text     "drive_directions"
     t.time     "drive_time"
+    t.float    "distance_between"
   end
 
   add_index "key_distances", ["location_id", "key_location_id"], name: "index_key_distances_on_location_id_and_key_location_id", unique: true, using: :btree
@@ -54,8 +63,10 @@ ActiveRecord::Schema.define(version: 20131102233454) do
     t.string   "link"
     t.integer  "user_id"
     t.boolean  "is_key"
+    t.integer  "group_id"
   end
 
+  add_index "locations", ["group_id"], name: "index_locations_on_group_id", using: :btree
   add_index "locations", ["user_id"], name: "index_locations_on_user_id", using: :btree
 
   create_table "users", force: true do |t|

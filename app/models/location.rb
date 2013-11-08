@@ -5,6 +5,7 @@ class Location < ActiveRecord::Base
   after_save :calculate_key_distances, :if => lambda{ |obj| obj.address_changed? }
   has_many :acts_as_key, :foreign_key=>"key_location_id", :class_name => "KeyDistance", :dependent => :destroy
   has_many :key_distances, :foreign_key=>"location_id", :class_name =>"KeyDistance", :dependent => :destroy
+  belongs_to :group
   belongs_to :user
 
   # setters to only allow digits

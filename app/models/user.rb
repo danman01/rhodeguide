@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   easy_roles :roles
 
   has_many :locations
+  has_many :groups
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
