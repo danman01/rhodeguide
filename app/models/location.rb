@@ -56,22 +56,35 @@ class Location < ActiveRecord::Base
   # else update just this locations' key distance entries with respect to other key distances
   def calculate_key_distances
     user = self.user
-    
+    group = self.group
     if self.is_key? # if a key location is changed, update all the others
       loc = self
       # get location's user (owner), then get all that users' locations, and update them based on this new key
       # second arg is self_is_key
-      user.locations.each do |location|
-        location.update_distance_to_key(loc)
+      # this should only be within groups
+      if group
+        group.locations.each do |location|
+          location.update_distance_to_key(loc)
+        end
+      else
+        user.locations.each do |location|
+          location.update_distance_to_key(loc)
+        end
       end
     else
       # location being updated just needs to recalculate distances to known key locations for itself
       # other locations remain untouched
-       keys = user.locations.where(:is_key => true)
-       keys.each do |key|
-         puts "calculating key distance for #{key.address}"
-         self.update_distance_to_key(key)      
-       end
+      if group
+        keys = group.locations.where(:is_key => true)
+      else
+        # user did not choose a group...
+        keys = user.locations.where("is_key =? && group_id IS NULL",true)
+      end
+      
+      keys.each do |key|
+        puts "calculating key distance for #{key.address}"
+        self.update_distance_to_key(key)      
+      end
     end
       
   end
