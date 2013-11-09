@@ -30,7 +30,10 @@
 <% else %>
   <%= link_to "Group your locations together",new_group_path(:location=>"true") %>
 <% end %>
-<h2>Currently viewing <%= @group.name %> locations</h2>
+<% if @group %>
+  <h2>Currently viewing <%= @group.name %> locations</h2>
+<% else %>
+<% end %>
 <table class="datatable">
   <thead>
     
