@@ -18,6 +18,19 @@
     })
   </script>
 <% end %>
+<%unless @groups.empty?%>
+  <%= form_tag(locations_path, :method=>'get') do %>
+   <p>
+     View which group?<br />
+     <%= select_tag("group", options_from_collection_for_select(@groups, 'id', 'name')) %>
+   </p>
+   <%= link_to "New Group",new_group_path(:location=>"true") %>
+   <%= submit_tag "View by group" %>
+  <% end %>
+<% else %>
+  <%= link_to "Group your locations together",new_group_path(:location=>"true") %>
+<% end %>
+<h2>Currently viewing <%= @group.name %> locations</h2>
 <table class="datatable">
   <thead>
     

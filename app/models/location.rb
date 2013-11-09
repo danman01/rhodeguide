@@ -19,17 +19,19 @@ class Location < ActiveRecord::Base
 
   # updates the distance between the passed in location in the object that is calilng this method, which is another location
   # second param, self_is_key, helps the new key_distance table entry by creating the appropriate associations
-  def update_distance_to_key(loc, self_is_key)
+  def update_distance_to_key(loc)
     # do not calculate for own distance to itself
     if self == loc
       puts "self is loc..returning..."
       return
     else
       # if location (self) is a key location, then loc refers to each of the users' other locations (non-keys)
-      if self_is_key
+      if self.is_key
         key_location_id = self.id
+        puts "key is self!"
       else
         key_location_id = loc.id
+        puts "key is loc!"
       end
       if self.geocoded?
         distance = Geocoder::Calculations.distance_between(self,[loc.latitude,loc.longitude]) rescue nil
@@ -38,6 +40,7 @@ class Location < ActiveRecord::Base
         key_distance.key_location_id = key_location_id
         # lazy just looking at drive distance 
         key_distance.drive_distance = distance
+        debugger
         if key_distance.save
           puts "\n =================== \n key distance saved!\n ==================="
           puts key_distance.to_yaml
@@ -59,14 +62,15 @@ class Location < ActiveRecord::Base
       # get location's user (owner), then get all that users' locations, and update them based on this new key
       # second arg is self_is_key
       user.locations.each do |location|
-        location.update_distance_to_key(loc, true)
+        location.update_distance_to_key(loc)
       end
     else
       # location being updated just needs to recalculate distances to known key locations for itself
       # other locations remain untouched
        keys = user.locations.where(:is_key => true)
        keys.each do |key|
-         self.update_distance_to_key(key, false)      
+         puts "calculating key distance for #{key.address}"
+         self.update_distance_to_key(key)      
        end
     end
       

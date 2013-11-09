@@ -157,18 +157,31 @@
           position.coords.longitude)
         map.setCenter(pos, 13);
         console.log("success!");
+        // define custom marker image
+        var image = new google.maps.MarkerImage(
+          '/assets/bluedot.png',
+          null, // size
+          null, // origin
+          new google.maps.Point( 8, 8 ), // anchor (move to center of marker)
+          new google.maps.Size( 17, 17 ) // scaled size (required for Retina display icon)
+        )
+
         // add marker for current loc
         var infowindow = new google.maps.InfoWindow({
-            content: "<span>CurrentLocation</span>"
-          });
-          marker = new google.maps.Marker({
-            map:map,
-            draggable:false,
-            animation: google.maps.Animation.DROP,
-            position: pos,
-            title: "Current Location"
-          });
-          add_click_event(marker,infowindow)
+          content: "<span>CurrentLocation</span>"
+        });
+        marker = new google.maps.Marker({
+          map: map,
+          icon: image,
+          flat: true,
+          optimized: false,
+          draggable:false,
+          visible: true,
+          animation: google.maps.Animation.DROP,
+          position: pos,
+          title: "i might be here" // important! this syncs with css
+        });
+        add_click_event(marker,infowindow)
           
 
       }

@@ -4,10 +4,21 @@ class LocationsController < ApplicationController
   def index
     @show_map = true
     if current_user
+      @groups = current_user.groups
+      if params[:group]
+        @group = Group.find_by(id: params[:group])
+      else
+        @group = nil
+      end
       if params[:search].present?
         @locations = current_user.locations.near(params[:search], 5, :order => :distance_to_key)
       else
-        @locations = current_user.locations
+        if @group
+          @locations = @group.locations
+        else
+          @locations = current_user.locations
+        end
+        
       end
 
     else
@@ -59,6 +70,6 @@ class LocationsController < ApplicationController
   private
 
   def location_params
-    params.require(:location).permit(:user_id,:is_key,:address,:latitude,:longitude,:beds,:baths,:price,:phone,:name,:notes,:neighborhood,:taxes,:link)
+    params.require(:location).permit(:group_id, :user_id,:is_key,:address,:latitude,:longitude,:beds,:baths,:price,:phone,:name,:notes,:neighborhood,:taxes,:link)
   end
 end
