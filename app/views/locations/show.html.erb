@@ -12,14 +12,7 @@
   <strong>Address:</strong>
   <%= @location.address %>
 </p>
-<p>
-  <strong>Latitude:</strong>
-  <%= @location.latitude %>
-</p>
-<p>
-  <strong>Longitude:</strong>
-  <%= @location.longitude %>
-</p>
+
 <p>
   <strong>neighborhood:</strong>
   <%= @location.neighborhood %>
@@ -67,3 +60,9 @@
   <%= link_to "Destroy", @location, :confirm => 'Are you sure?', :method => :delete %> |
   <%= link_to "View All", locations_path, "data-no-turbolink"=>true %>
 </p>
+<%= render "locations/view_by_group" %>
+<% if @group %>
+  <h2>Listing is in group <%= @group.name %></h2>
+<% else %>
+<% end %>
+

@@ -18,26 +18,17 @@
     })
   </script>
 <% end %>
-<%unless @groups.empty?%>
-  <%= form_tag(locations_path, :method=>'get') do %>
-   <p>
-     View which group?<br />
-     <%= select_tag("group", options_from_collection_for_select(@groups, 'id', 'name')) %>
-   </p>
-   <%= link_to "New Group",new_group_path(:location=>"true") %>
-   <%= submit_tag "View by group" %>
-  <% end %>
-<% else %>
-  <%= link_to "Group your locations together",new_group_path(:location=>"true") %>
-<% end %>
 <% if @group %>
   <h2>Currently viewing <%= @group.name %> locations</h2>
 <% else %>
 <% end %>
+<%= render 'locations/view_by_group' %>
+
 <table class="datatable">
   <thead>
     
     <tr>
+      <th></th>
       <th>Address</th>
       <!-- Hiding lat/long
       <th>Latitude</th>
@@ -59,13 +50,16 @@
     </tr>
   </thead>
   <tbody>
-    
+    <%= count = 0 %>
     <% for location in @locations %>
+      <%= count+=1 %>
       <% if location.is_key %>
         <tr class="highlight">
       <% else %>
         <tr>
       <% end %>
+      <td><%= count %></td>
+      
       <td class="loc loc_<%=location.id%>"><%= location.address %></td>
       <!-- Hiding lat/long        
         <td><%#= location.latitude %></td>
@@ -101,6 +95,7 @@
 </table>
   <br /><br />
   <div>
+    <%= image_tag("http://google.com/mapfiles/kml/paddle/grn-blank.png") %>
     Keys:
     <% @key_locations.each do |key_location| %>
       <%=key_location.address%> <br />

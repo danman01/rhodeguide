@@ -42,7 +42,7 @@
         var marker_price_array = new Array();
         var marker_link_array = new Array();
         var marker_key_distance_array = new Array();
-        
+        var marker_is_key_array = new Array();
 
         <%count = 0%>
         <%@locations.each do |loc|%>
@@ -51,6 +51,7 @@
           var marker_<%=count%> = new google.maps.LatLng(<%=loc.latitude%>,<%=loc.longitude%>);
           marker_array.push(marker_<%=count%>)
           marker_title_array.push("<%=loc.address%>")
+          marker_is_key_array.push("<%= loc.is_key%>")
           marker_price_array.push("<%=loc.price%>")
           <%unless loc.key_distances.empty? %>
             <%# put all distances to key in the key distance array%>
@@ -120,11 +121,23 @@
             var infowindow = new google.maps.InfoWindow({
               content: contentString
             });
+            if (i < 10){
+              paddle_num = i+1
+              var image = 'http://google.com/mapfiles/kml/paddle/'+paddle_num+'.png';
+            } else {
+              var image = 'http://google.com/mapfiles/kml/paddle/red-blank.png';
+            }
+            // override image if marker is key
+            console.log("marker is key?"+marker_is_key_array[i])
+            if (marker_is_key_array[i] == "true"){
+              var image = 'http://google.com/mapfiles/kml/paddle/grn-blank.png';
+            }
             marker = new google.maps.Marker({
               map:map,
               draggable:true,
               animation: google.maps.Animation.DROP,
               position: marker_array[i],
+              icon: image,
               title: marker_title_array[i]
             });
             add_click_event(marker,infowindow)
@@ -210,7 +223,7 @@
   <%end%>
   
   
-  <div style="margin-top:60px;">
+  <div class="content-wrapper">
     <%= yield %>
   </div>
 

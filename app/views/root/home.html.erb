@@ -13,7 +13,7 @@
       <div class="normal-text">
         You have entered <%=pluralize(current_user.locations.size,"locations")%>
         <br />
-        Manage them <%= link_to "here", locations_path %>
+        Manage them <%= link_to "here", locations_path, "data-no-turbolinks"=>true %>
       </div>
      <% end %>
   </div>

@@ -31,6 +31,9 @@ class LocationsController < ApplicationController
     @show_map = true
     @location = Location.find(params[:id])
     @locations = [@location]
+    @groups = current_user.groups rescue nil
+    @groups <<
+    @group = @location.group
   end
 
   def new
