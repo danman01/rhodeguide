@@ -50,9 +50,9 @@
     </tr>
   </thead>
   <tbody>
-    <%= count = 0 %>
+    <% count = 0 %>
     <% for location in @locations %>
-      <%= count+=1 %>
+      <% count+=1 %>
       <% if location.is_key %>
         <tr class="highlight">
       <% else %>
