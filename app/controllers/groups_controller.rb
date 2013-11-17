@@ -34,7 +34,7 @@ class GroupsController < ApplicationController
         if params[:location]
           @redirect = new_location_path
         else
-          @redirect = @group
+          @redirect = root_url 
         end
         format.html { redirect_to @redirect, notice: 'Group was successfully created.' }
         format.json { render action: 'show', status: :created, location: @group }
