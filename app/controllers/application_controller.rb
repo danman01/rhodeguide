@@ -5,6 +5,14 @@ class ApplicationController < ActionController::Base
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
+  # Override after sign in to point user to creating a new group
+  def after_sign_in_path_for(resource)
+    if user_signed_in? && current_user.groups.empty?
+      new_group_path
+    else
+      root_url
+    end
+  end
 
   protected
 

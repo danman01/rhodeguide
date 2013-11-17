@@ -16,8 +16,10 @@
     <%= f.text_field :address %>
   </p>
   <p>
-  <%= f.label :group_id,"Add this location to a group?" %><span><%= link_to "(Add group)",new_group_path(:location=>true) %></span>
-    <%= f.collection_select :group_id, current_user.groups.order(:name),:id,:name, include_blank: true %>
+  <%= f.label :group_id,"Add this location to a group?" %><br />
+  <%= f.collection_select :group_id, current_user.groups.order(:name),:id,:name, include_blank: true %>
+  <p><%= link_to "(Add new group)",new_group_path(:location=>true) %></p>
+
   </p>
   <% if params[:action]=="edit" %>
     <p>

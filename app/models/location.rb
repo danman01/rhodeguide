@@ -43,7 +43,6 @@ class Location < ActiveRecord::Base
         key_distance.key_location_id = key_location_id
         # lazy just looking at drive distance 
         key_distance.drive_distance = distance
-        debugger
         if key_distance.save
           puts "\n =================== \n key distance saved!\n ==================="
           puts key_distance.to_yaml
