@@ -1,0 +1,9 @@
+<fieldset>
+  <%= f.label :url, "Image Url" %>
+  <br />
+  <%= f.text_field :url %>
+  <%= image_tag(f.object.url) if f.object && f.object.url %>
+  <br />
+  <%= f.hidden_field :_destroy %>
+  <%= link_to "remove", "#", :class => "remove_fields" %>
+</fieldset>

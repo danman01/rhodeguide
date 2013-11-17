@@ -29,44 +29,48 @@
       <%= f.text_field :longitude %>
     </p>
   <% end %>
-<div id="potential_places">
-<p><%= f.label :neighborhood %><br />
-  <%= f.text_field :neighborhood %>
-</p>
-<p>
-<%= f.label :beds %><br />
-<%= f.text_field :beds %>
-</p>
-<p>
-<%= f.label :baths %><br />
-<%= f.text_field :baths %>
-</p>
-<p>
-<%= f.label :price %><br />
-<%= f.text_field :price %>
-</p>
-<p>
-<%= f.label :taxes %><br />
-<%= f.text_field :taxes %>
-</p>
-<h2>Realtor:</h2>
-<p>
-<%= f.label :name %><br />
-<%= f.text_field :name %>
-</p>
-<p>
-<%= f.label :phone %><br />
-<%= f.telephone_field :phone %>
-</p>
-<p>
-<%= f.label :link %><br />
-<%= f.text_field :link %>
-</p>
-</div>
-<p>
-<%= f.label :notes %><br />
-<%= f.text_area :notes %>
-</p>
+  <div id="potential_places">
+    <p><%= f.label :neighborhood %><br />
+      <%= f.text_field :neighborhood %>
+    </p>
+    <p>
+    <%= f.label :beds %><br />
+    <%= f.text_field :beds %>
+    </p>
+    <p>
+    <%= f.label :baths %><br />
+    <%= f.text_field :baths %>
+    </p>
+    <p>
+    <%= f.label :price %><br />
+    <%= f.text_field :price %>
+    </p>
+    <p>
+    <%= f.label :taxes %><br />
+    <%= f.text_field :taxes %>
+    </p>
+    <h2>Realtor:</h2>
+    <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+    </p>
+    <p>
+    <%= f.label :phone %><br />
+    <%= f.telephone_field :phone %>
+    </p>
+    <p>
+    <%= f.label :link %><br />
+    <%= f.text_field :link %>
+    </p>
+  </div>
+  <p>
+  <%= f.label :notes %><br />
+  <%= f.text_area :notes %>
+  </p>
+  <%= f.fields_for :images do |builder| %>
+    <%= render 'locations/image_fields', f: builder %>
+  <% end %>
+  <%= link_to_add_fields "Add Image", f, :images %>
   <p><%= f.submit "Create Location", class: 'btn' %></p>
 <% end %>
 

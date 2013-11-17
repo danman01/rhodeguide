@@ -1,5 +1,7 @@
 Rhodeguide::Application.routes.draw do
   
+  resources :images
+
   resources :groups
 
   devise_for :users

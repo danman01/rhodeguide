@@ -4,9 +4,12 @@ class Location < ActiveRecord::Base
   after_validation :geocode, :if => lambda{ |obj| obj.address_changed? }
   after_save :calculate_key_distances, :if => lambda{ |obj| obj.address_changed? }
   has_many :acts_as_key, :foreign_key=>"key_location_id", :class_name => "KeyDistance", :dependent => :destroy
+  has_many :images
   has_many :key_distances, :foreign_key=>"location_id", :class_name =>"KeyDistance", :dependent => :destroy
   belongs_to :group
   belongs_to :user
+
+  accepts_nested_attributes_for :images, :allow_destroy => true
 
   # setters to only allow digits
   def price=(price)
@@ -78,12 +81,13 @@ class Location < ActiveRecord::Base
         keys = group.locations.where(:is_key => true)
       else
         # user did not choose a group...
-        keys = user.locations.where("is_key =? && group_id IS NULL",true)
+        keys = user.locations.where("is_key =? AND group_id IS NULL",true)
       end
-      
-      keys.each do |key|
-        puts "calculating key distance for #{key.address}"
-        self.update_distance_to_key(key)      
+      unless keys.empty? 
+        keys.each do |key|
+          puts "calculating key distance for #{key.address}"
+          self.update_distance_to_key(key)      
+        end
       end
     end
       

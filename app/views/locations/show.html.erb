@@ -1,6 +1,4 @@
 <div id="map-canvas"></div>
-
-<h3>Nearby locations</h3>
 <!--
 <ul>
 <%# for location in @location.nearbys(10) %>
@@ -53,6 +51,9 @@
   <%= @location.notes %>
 </p>
 
+<% @location.images.each do |image| %>
+  <span><%= link_to image_tag(image.url),image.url, target: "_blank" %></span>
+<% end %>
 
 
 <p>

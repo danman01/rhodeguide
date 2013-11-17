@@ -32,7 +32,6 @@ class LocationsController < ApplicationController
     @location = Location.find(params[:id])
     @locations = [@location]
     @groups = current_user.groups rescue nil
-    @groups <<
     @group = @location.group
   end
 
@@ -73,6 +72,6 @@ class LocationsController < ApplicationController
   private
 
   def location_params
-    params.require(:location).permit(:group_id, :user_id,:is_key,:address,:latitude,:longitude,:beds,:baths,:price,:phone,:name,:notes,:neighborhood,:taxes,:link)
+    params.require(:location).permit({:images_attributes => [:id, :url,:_destroy]}, :group_id, :user_id,:is_key,:address,:latitude,:longitude,:beds,:baths,:price,:phone,:name,:notes,:neighborhood,:taxes,:link)
   end
 end
